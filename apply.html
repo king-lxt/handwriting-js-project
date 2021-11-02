@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apply</title>
+</head>
+
+<body>
+    <script>
+        // 第一种
+        // Function.prototype._Apply = function (obj, arr) {
+        //     const ctx = obj || window;
+        //     ctx.func = this;
+
+        //     let result;
+        //     if (!arr) {
+        //         ctx.func();
+        //     } else {
+        //         result = ctx.func(...arr);
+        //     }
+
+        //     delete ctx.func;
+        //     return result
+        // }
+
+        // 第二种
+        Function.prototype._Apply = function (obj, arr) {
+            let ctx = obj || window;
+            ctx.func = this;
+            var result;
+            if (!arr) {
+                result = ctx.func();
+            } else {
+                let args = [];
+                for (let i = 0; i < arr.length; i++) {
+                    args.push('arr[' + i + ']');
+                }
+                result = eval('ctx.func(' + args + ')')
+            }
+            delete ctx.func;
+            return result;
+        }
+
+
+
+        function test() {
+            console.log(this.name);
+        }
+        // 自定义对象
+        var obj = {
+            name: 'xmly'
+        }
+        // 调用函数的 _Call 方法
+        test._Apply(obj, [1, 2])
+    </script>
+</body>
+
+</html>

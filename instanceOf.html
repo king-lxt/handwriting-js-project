@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const instanceOf1 = (leftVal, rightVal) => {
+            if (leftVal === null || typeof leftVal !== 'object') return false;
+            // let proto = Object.getPrototypeOf(leftVal);
+            // 或者
+            let proto = leftVal.__proto__;
+            if (proto === rightVal.prototype) {
+                return true;
+            } else if (proto === null) {
+                return false;
+            } else {
+                return instanceOf1(proto, rightVal);
+            }
+        }
+
+
+        /**
+         * test
+        */
+        let Fn = function () { }
+        let p1 = new Fn()
+
+        console.log(instanceOf1(p1, Fn))
+    </script>
+</body>
+
+</html>
